@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ .Title }}</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          margin: 40px;
+          background-color: #f4f4f4;
+      }
+      .container {
+          margin: auto;
+          max-width: 600px;
+          background: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+          color: #333;
+      }
+      pre {
+          background: #eee;
+          padding: 10px;
+          border-radius: 5px;
+          overflow-x: auto;
+      }
+  </style>
+</head>
+<body>
+<div class="container">
+    <h2>{{ .Title }}</h2>
+    <p><b>Recommended Status Code:</b> {{ .RecommendedStatusCode }}</p>
+    <p>
+        lorem20
+        lorem20
+        lorem20
+        lorem20
+        lorem20
+        lorem20
+        lorem20
+        lorem20
+    </p>
+
+    <h3>Description</h3>
+    <p>{{ .Description }}</p>
+
+
+    <h3>Example Response</h3>
+    <pre>
+{
+    "type": "https://example.com/probs/custom-error",
+    "title": "Custom Error",
+    "status": 400,
+    "detail": "A specific description of the error that occurred.",
+    "instance": "/errors/12345"
+}
+    </pre>
+
+    <p>
+        <a href="https://www.rfc-editor.org/rfc/rfc9457.html" target="_blank">
+            RFC 9457 - Problem Details for HTTP APIs
+        </a>
+    </p>
+
+  </div>
+</body>
+</html>

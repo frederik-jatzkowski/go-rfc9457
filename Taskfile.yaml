@@ -1,0 +1,20 @@
+version: '3'
+
+tasks:
+  check:
+    cmds:
+      - task: test
+      - task: lint
+      - task: vuln
+
+  test:
+    cmds:
+      - go test ./...
+
+  lint:
+    cmds:
+      - go tool github.com/golangci/golangci-lint/cmd/golangci-lint run -v ./...
+
+  vuln:
+    cmds:
+      - go tool golang.org/x/vuln/cmd/govulncheck

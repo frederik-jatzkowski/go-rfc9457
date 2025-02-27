@@ -1,0 +1,60 @@
+linters-settings:
+  lll:
+    line-length: 120
+  errcheck:
+    # Report about not checking of errors in type assertions: `a := b.(MyStruct)`.
+    check-type-assertions: true
+    # report about assignment of errors to blank identifier: `num, _ := strconv.Atoi(numStr)`.
+    check-blank: true
+  cyclop:
+    max-complexity: 10
+  nlreturn:
+    block-size: 2
+  staticcheck:
+    checks:
+      - all
+      - -SA1019 # disable deprecation warnings
+
+linters:
+  disable-all: true
+  enable:
+    - govet
+    - typecheck
+    - unused
+    - unconvert
+    - gocritic
+    - goconst
+    - errorlint
+    - nilnil
+    - nilerr
+    - bodyclose
+    - exhaustive
+    - nakedret
+    - prealloc
+    - gosec
+    - cyclop
+    - lll # line length
+    - nlreturn # empty line before return, break, continue
+    - wsl # empty lines for more clarity
+    - errcheck # no unhandled errors allowed
+    - gosimple # proposes more simple and elegant code
+    - staticcheck # more static analysis
+    - testpackage
+
+run:
+  timeout: 5m
+
+issues:
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - errcheck
+        - lll
+        - staticcheck
+        - goconst
+        - gosec
+  # Maximum count of issues with the same text. Set to 0 to disable.
+  max-issues-per-linter: 0
+  # Maximum count of issues with the same text. Set to 0 to disable.
+  max-same-issues: 0
