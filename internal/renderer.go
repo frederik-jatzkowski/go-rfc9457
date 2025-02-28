@@ -1,7 +1,16 @@
 package internal
 
-import "io"
+import (
+	"html/template"
+)
+
+type RenderArgs struct {
+	Name                   string
+	Title                  string
+	Description            template.HTML
+	RecommendedStatusCodes string
+}
 
 type Renderer interface {
-	RenderTo(w io.Writer)
+	Render(args RenderArgs) ([]byte, error)
 }

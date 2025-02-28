@@ -1,9 +1,9 @@
 package internal
 
 import (
+	"bytes"
 	_ "embed"
 	"html/template"
-	"io"
 )
 
 //go:embed problem-detail.html
@@ -19,11 +19,13 @@ func NewHtmlRenderer() (HtmlRenderer, error) {
 	return HtmlRenderer{tmpl: tmpl}, err
 }
 
-type RenderArgs struct {
-}
+func (renderer HtmlRenderer) Render(args RenderArgs) ([]byte, error) {
+	var buf bytes.Buffer
 
-func (renderer HtmlRenderer) RenderTo(w io.Writer) error {
-	dot := RenderArgs{}
+	err := renderer.tmpl.Execute(&buf, args)
+	if err != nil {
+		return nil, err
+	}
 
-	return renderer.tmpl.Execute(w, dot)
+	return buf.Bytes(), nil
 }

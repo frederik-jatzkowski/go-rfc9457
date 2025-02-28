@@ -11,9 +11,14 @@ type Handler struct {
 }
 
 func NewHandler(registry Registry) (Handler, error) {
+	renderer, err := internal.NewHtmlRenderer()
+	if err != nil {
+		return Handler{}, err
+	}
+
 	return Handler{
 		registry: registry,
-		renderer: internal.HtmlRenderer{},
+		renderer: renderer,
 	}, nil
 }
 
@@ -23,14 +28,24 @@ func (h Handler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 		path = path[1:]
 	}
 
-	problemType, exists := h.registry.types[path]
+	problemType, exists := h.registry.findProblemByName(path)
 	if !exists {
 		writer.WriteHeader(http.StatusNotFound)
 
 		return
 	}
 
+	data, err := h.renderer.Render(internal.RenderArgs{
+		Name:        problemType.name,
+		Title:       problemType.title,
+		Description: problemType.description,
+	})
+	if err != nil {
+		writer.WriteHeader(http.StatusInternalServerError)
+		writer.Write([]byte(err.Error()))
+	}
+
 	writer.Header().Set("Content-Type", "text/html")
 	writer.WriteHeader(http.StatusOK)
-	writer.Write([]byte(problemType.Error()))
+	writer.Write(data)
 }

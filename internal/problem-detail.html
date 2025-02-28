@@ -10,6 +10,7 @@
           margin: 40px;
           background-color: #f4f4f4;
       }
+
       .container {
           margin: auto;
           max-width: 600px;
@@ -20,6 +21,7 @@
       }
       h2 {
           color: #333;
+          margin-top: 0;
       }
       pre {
           background: #eee;
@@ -27,44 +29,49 @@
           border-radius: 5px;
           overflow-x: auto;
       }
+
+      table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+      }
+
+      td, th {
+          border: 1px solid #eee;
+          text-align: left;
+          padding: 8px;
+      }
+
+      .rfc-link {
+          font-size: .8em;
+          margin-bottom: 0;
+      }
   </style>
 </head>
 <body>
 <div class="container">
-    <h2>{{ .Title }}</h2>
-    <p><b>Recommended Status Code:</b> {{ .RecommendedStatusCode }}</p>
-    <p>
-        lorem20
-        lorem20
-        lorem20
-        lorem20
-        lorem20
-        lorem20
-        lorem20
-        lorem20
-    </p>
+    <h2>{{ .Name }}</h2>
 
-    <h3>Description</h3>
-    <p>{{ .Description }}</p>
+    <table>
+        <tr>
+            <td>Title</td>
+            <td>{{ .Title }}</td>
+        </tr>
+        <tr>
+            <td>Recommended Status Codes</td>
+            <td>{{ .RecommendedStatusCodes }}</td>
+        </tr>
+    </table>
 
+    {{ .Description }}
 
-    <h3>Example Response</h3>
-    <pre>
-{
-    "type": "https://example.com/probs/custom-error",
-    "title": "Custom Error",
-    "status": 400,
-    "detail": "A specific description of the error that occurred.",
-    "instance": "/errors/12345"
-}
-    </pre>
+    <br>
 
-    <p>
+    <p class="rfc-link">
         <a href="https://www.rfc-editor.org/rfc/rfc9457.html" target="_blank">
             RFC 9457 - Problem Details for HTTP APIs
         </a>
     </p>
-
   </div>
 </body>
 </html>
