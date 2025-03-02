@@ -17,8 +17,8 @@ var (
 )
 
 func TestHandler_ServeHTTP(t *testing.T) {
-	registry := rfc9457.NewRegistry()
-	err := registry.RegisterError(ErrTest1, http.StatusBadRequest)
+	registry := rfc9457.NewRegistry("http://localhost:8080/")
+	err := registry.Define(ErrTest1)
 	require.NoError(t, err)
 
 	handler, err := rfc9457.NewHandler(registry)

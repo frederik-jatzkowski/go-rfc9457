@@ -1,19 +1,23 @@
 package rfc9457
 
-import "fmt"
+import (
+	"encoding/json"
+)
+
+type (
+	ProblemInstanceDetail string
+)
 
 type ProblemInstance struct {
-	problemType ProblemType
-	detail      string
+	ProblemType
+	Detail ProblemInstanceDetail `json:"detail"`
 }
 
 func (i ProblemInstance) String() string {
-	return fmt.Sprintf(
-		`
-{
-	 "type": "/%s",
-}
-`,
-		i.problemType.name,
-	)
+	data, err := json.Marshal(i)
+	if err != nil {
+		return err.Error()
+	}
+
+	return string(data)
 }

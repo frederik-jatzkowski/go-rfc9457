@@ -2,6 +2,7 @@ package rfc9457
 
 import (
 	"github.com/frederik-jatzkowski/go-rfc9457/internal"
+	"html/template"
 	"net/http"
 )
 
@@ -28,7 +29,7 @@ func (h Handler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 		path = path[1:]
 	}
 
-	problemType, exists := h.registry.findProblemByName(path)
+	problemType, exists := h.registry.findProblemByName(ProblemTypeName(path))
 	if !exists {
 		writer.WriteHeader(http.StatusNotFound)
 
@@ -36,9 +37,9 @@ func (h Handler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	data, err := h.renderer.Render(internal.RenderArgs{
-		Name:        problemType.name,
-		Title:       problemType.title,
-		Description: problemType.description,
+		Name:        string(problemType.Name),
+		Title:       string(problemType.Title),
+		Description: template.HTML(problemType.Description),
 	})
 	if err != nil {
 		writer.WriteHeader(http.StatusInternalServerError)
