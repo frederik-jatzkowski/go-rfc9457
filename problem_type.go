@@ -20,8 +20,8 @@ type ProblemType struct {
 	Description            ProblemTypeDescription `json:"-"`
 }
 
-func (t ProblemType) Instantiate(detail string) ProblemInstance {
-	return ProblemInstance{
+func (t ProblemType) Instantiate(detail string) ProblemDetail {
+	return ProblemDetail{
 		ProblemType: t,
 		Detail:      ProblemInstanceDetail(detail),
 	}

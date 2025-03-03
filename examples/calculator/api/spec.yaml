@@ -1,0 +1,59 @@
+openapi: 3.0.0
+info:
+  title: Calculator API
+  description: A simple API for performing basic arithmetic operations.
+  version: 1.0.0
+servers:
+  - url: https://example.com
+    description: Production server
+  - url: http://localhost:5000
+    description: Local development server
+paths:
+  /api/calculator/{num1}/{symbol}/{num2}:
+    get:
+      summary: Perform a calculation
+      description: Computes the result of an arithmetic operation using two numbers and an operator.
+      parameters:
+        - name: num1
+          in: path
+          required: true
+          schema:
+            type: number
+          description: The first operand.
+        - name: symbol
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: ["+", "-", "*", "%2F"]  # URL-encoded '/' as '%2F'
+          description: The arithmetic operator (+, -, *, /).
+        - name: num2
+          in: path
+          required: true
+          schema:
+            type: number
+          description: The second operand.
+      responses:
+        "200":
+          description: Successful calculation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  num1:
+                    type: number
+                  symbol:
+                    type: string
+                  num2:
+                    type: number
+                  result:
+                    type: number
+        "400":
+          description: Invalid input (e.g., division by zero or invalid operator)
+          content:
+            application/problem+json:
+              schema:
+                $ref: './rfc9457.yaml#/components/schemas/ProblemDetail'
+        "500":
+          description: Internal server error

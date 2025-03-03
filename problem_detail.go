@@ -8,12 +8,12 @@ type (
 	ProblemInstanceDetail string
 )
 
-type ProblemInstance struct {
+type ProblemDetail struct {
 	ProblemType
 	Detail ProblemInstanceDetail `json:"detail"`
 }
 
-func (i ProblemInstance) String() string {
+func (i ProblemDetail) String() string {
 	data, err := json.Marshal(i)
 	if err != nil {
 		return err.Error()

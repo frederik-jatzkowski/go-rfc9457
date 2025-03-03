@@ -1,0 +1,9 @@
+# yaml-language-dbms: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/HEAD/configuration-schema.json
+package: api
+generate:
+  std-http-server: true
+  strict-server: true
+  models: true
+import-mapping:
+  ./rfc9457.yaml: "github.com/frederik-jatzkowski/go-rfc9457"
+output: server_gen.go
